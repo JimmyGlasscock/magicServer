@@ -54,23 +54,27 @@ public class Main {
 	}
 	
 	public void copyToStartup() {
+		String osName = System.getProperty("os.name");
 		
-		String autostart = System.getProperty("java.io.tmpdir").replace("Local\\Temp\\", "Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
-		String runningDir = Paths.get(".").toAbsolutePath().normalize().toString();
 		
-		Path autoStartPath = Paths.get(autostart);
-		Path currentPath = Paths.get(runningDir);
-		
-		try {
-			Files.copy(currentPath.resolve("CaveGame.jar"), autoStartPath.resolve("CaveGame.jar"));
-		} catch(java.nio.file.FileAlreadyExistsException e) {
-			System.out.println("File already boots on startup!");
-			fileAlreadyExists = true;
-		}catch (IOException e) {
-				moveFailed = true;
-				
+		if(osName.contains("windows")) {
+			String autostart = System.getProperty("java.io.tmpdir").replace("Local\\Temp\\", "Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
+			String runningDir = Paths.get(".").toAbsolutePath().normalize().toString();
+			
+			Path autoStartPath = Paths.get(autostart);
+			Path currentPath = Paths.get(runningDir);
+			
+			try {
+				Files.copy(currentPath.resolve("CaveGame.jar"), autoStartPath.resolve("CaveGame.jar"));
+			} catch(java.nio.file.FileAlreadyExistsException e) {
+				System.out.println("File already boots on startup!");
+				fileAlreadyExists = true;
+			}catch (IOException e) {
+					moveFailed = true;
+					
+			}
+			System.out.println("MoveFailed: " + moveFailed);
 		}
-		System.out.println("MoveFailed: " + moveFailed);
 	}
 	
 	public void start() {
