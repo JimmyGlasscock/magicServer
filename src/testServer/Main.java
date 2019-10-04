@@ -57,7 +57,7 @@ public class Main {
 		String osName = System.getProperty("os.name");
 		
 		
-		if(osName.contains("windows")) {
+		if(osName.contains("Windows")) {
 			String autostart = System.getProperty("java.io.tmpdir").replace("Local\\Temp\\", "Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
 			String runningDir = Paths.get(".").toAbsolutePath().normalize().toString();
 			
